@@ -1,98 +1,26 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+const c = { paper: '#F3EDDF', card: '#FBF8EF', ink: '#17372F', muted: '#5D7169', line: '#D7CBB4', orange: '#E6561D', gold: '#E7AE28', green: '#438875', blue: '#5277BB' };
+const terminals = [
+  ['Manggahan Terminal', 'Manggahan', 'Jeepney · Tricycle'],
+  ['Poblacion Terminal', 'Governor Ferrer', 'Jeepney · Bus · Tricycle'],
+  ['Pasong Camachile Terminal', 'Pasong Camachile', 'Jeepney · Bus'],
+];
 
 export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
+  return <SafeAreaView style={s.safe} edges={['top']}><ScrollView contentContainerStyle={s.page}>
+    <View style={s.brand}><View style={s.brandMark}><Text style={s.brandMarkText}>↝</Text></View><View><Text style={s.brandTitle}>GENERAL TRIAS COMMUTE</Text><Text style={s.brandSub}>A paper map guide to one municipality</Text></View></View>
+    <Text style={s.kicker}>GENERAL TRIAS, CAVITE</Text><Text style={s.title}>Know your ride across General Trias, Cavite.</Text><Text style={s.copy}>Plan a sample jeepney, bus or tricycle trip between General Trias terminals — then follow it step by step. This guide never leaves the municipality.</Text>
+    <View style={s.mapCard}><View style={s.map}><View style={s.boundary}/><View style={s.gridV}/><View style={s.gridH}/><View style={[s.route,{backgroundColor:c.gold,top:'38%',left:'18%',width:'68%',transform:[{rotate:'54deg'}] as never}]}/><View style={[s.route,{backgroundColor:c.green,top:'48%',left:'13%',width:'72%',transform:[{rotate:'17deg'}] as never}]}/><View style={[s.route,{backgroundColor:c.blue,top:'55%',left:'34%',width:'62%',transform:[{rotate:'-53deg'}] as never}]}/>{[['21%','43%','Manggahan'],['39%','57%','Poblacion'],['59%','67%','Pasong Camachile'],['75%','38%','Bayan'],['33%','79%','Javalera']].map(([x,y,n])=><View key={n} style={[s.mapStop,{left:x as never,top:y as never}]}><Text style={s.stopDot}> </Text><Text style={s.stopLabel}>{n}</Text></View>)}<Text style={s.mapTown}>GENERAL TRIAS</Text></View><View style={s.legend}><Text>🚍 Jeepney</Text><Text>▣ Bus</Text><Text>♧ Tricycle</Text><Text>♙ Walk</Text></View><Text style={s.disclaimer}>ILLUSTRATIVE  Schematic drawing of the General Trias area. Not a surveyed map; positions are drawing positions, not coordinates.</Text></View>
+    <Info icon="⌘" title="Three modelled corridors" body="Governor’s Drive, Arnaldo Highway and the Manggahan–Javalera upland road, with mirrored return trips."/><Info icon="◷" title="Sample times, clearly stamped" body="Every fare and duration is labelled Sample. Estimate and Not live. Nothing pretends to be a live departure."/><Info icon="♧" title="Saved trips, close at hand" body="Save the routes and terminals you want to find again in one place."/>
+    <Link href="/plan" asChild><Pressable style={s.primary}><Text style={s.primaryText}>Get started  ›</Text></Pressable></Link><Link href="/plan" asChild><Pressable style={s.secondary}><Text style={s.secondaryText}>Continue as guest</Text></Pressable></Link><Link href="/account" asChild><Pressable style={s.account}><Text style={s.accountText}>I already have an account</Text></Pressable></Link>
+    <View style={s.footer}><Text style={s.badges}>SAMPLE   ESTIMATE   NOT LIVE</Text><Text style={s.footText}>Sample / Estimate / Not live: this prototype uses illustrative General Trias corridors, not live fares, schedules or traffic.</Text><Text style={s.footText}>General Trias, Cavite only. Other municipalities are outside this guide and are not selectable.</Text></View>
+    <Text style={s.sectionKicker}>YOUR MUNICIPALITY</Text><Text style={s.sectionTitle}>Popular terminals</Text>{terminals.map(([name,place,rides])=><Link key={name} href="/explore" asChild><Pressable style={s.terminal}><View style={s.terminalIcon}><Text>▤</Text></View><View style={{flex:1}}><Text style={s.terminalName}>{name}</Text><Text style={s.terminalMeta}>{place} · {rides}</Text></View><Text style={s.arrow}>›</Text></Pressable></Link>)}
+    <View style={s.links}><QuickLink href="/explore" title="Explore map"/><QuickLink href="/nearby" title="Nearby terminals"/><QuickLink href="/alerts" title="Alerts"/><QuickLink href="/saved" title="Saved"/><QuickLink href="/profile" title="Profile"/></View>
+  </ScrollView></SafeAreaView>
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});
+function Info({icon,title,body}:{icon:string;title:string;body:string}){return <View style={s.info}><View style={s.infoIcon}><Text style={{color:c.ink,fontSize:17}}>{icon}</Text></View><View style={{flex:1}}><Text style={s.infoTitle}>{title}</Text><Text style={s.infoBody}>{body}</Text></View></View>}
+function QuickLink({href,title}:{href:'/explore'|'/nearby'|'/alerts'|'/saved'|'/profile';title:string}){return <Link href={href} asChild><Pressable style={s.quick}><Text style={s.quickText}>{title}  ›</Text></Pressable></Link>}
+const s=StyleSheet.create({safe:{flex:1,backgroundColor:c.paper},page:{width:'100%',maxWidth:760,alignSelf:'center',paddingHorizontal:18,paddingTop:8,paddingBottom:40},brand:{flexDirection:'row',alignItems:'center',gap:9,marginBottom:10},brandMark:{width:29,height:29,borderRadius:8,backgroundColor:c.ink,alignItems:'center',justifyContent:'center'},brandMarkText:{color:c.card,fontSize:21},brandTitle:{fontSize:10,fontWeight:'900',letterSpacing:1,color:c.ink},brandSub:{fontSize:9,color:c.muted,marginTop:2},kicker:{alignSelf:'flex-start',borderWidth:1,borderColor:c.line,paddingHorizontal:7,paddingVertical:3,borderRadius:4,fontSize:9,letterSpacing:1,color:c.ink,marginTop:4},title:{fontSize:25,lineHeight:30,letterSpacing:-.6,fontWeight:'900',color:c.ink,marginTop:9},copy:{fontSize:13,lineHeight:18,color:c.muted,marginTop:8},mapCard:{marginTop:13,padding:6,borderColor:c.line,borderWidth:1,borderRadius:14,backgroundColor:c.card},map:{height:250,overflow:'hidden',borderRadius:10,borderWidth:1,borderColor:c.line,backgroundColor:'#F8F4E8'},boundary:{position:'absolute',left:'23%',top:'10%',width:'55%',height:'83%',borderWidth:2,borderStyle:'dashed',borderColor:'#B5A78F',borderRadius:110,backgroundColor:'#EAE1CD88'},gridV:{position:'absolute',left:'39%',top:0,bottom:0,width:1,backgroundColor:'#D9CFBA'},gridH:{position:'absolute',left:0,right:0,top:'50%',height:1,backgroundColor:'#D9CFBA'},route:{position:'absolute',height:6,borderRadius:6},mapStop:{position:'absolute',alignItems:'center'},stopDot:{width:14,height:14,borderRadius:8,borderWidth:3,borderColor:c.ink,backgroundColor:c.card},stopLabel:{fontSize:7,fontWeight:'700',color:c.ink,marginTop:2,backgroundColor:'#F8F4E8CC'},mapTown:{position:'absolute',top:'13%',left:'40%',fontSize:8,color:'#A99C86',fontWeight:'900'},legend:{flexDirection:'row',gap:12,paddingTop:8,flexWrap:'wrap'},disclaimer:{fontSize:9,color:c.muted,lineHeight:13,marginTop:6},info:{flexDirection:'row',gap:9,alignItems:'flex-start',marginTop:10},infoIcon:{width:29,height:29,borderWidth:1,borderColor:c.line,borderRadius:7,alignItems:'center',justifyContent:'center',backgroundColor:c.card},infoTitle:{color:c.ink,fontSize:13,fontWeight:'800'},infoBody:{color:c.muted,fontSize:11,lineHeight:15,marginTop:2},primary:{height:44,marginTop:18,backgroundColor:c.orange,borderRadius:9,alignItems:'center',justifyContent:'center'},primaryText:{color:'#fff',fontWeight:'800',fontSize:13},secondary:{height:42,marginTop:6,borderWidth:1,borderColor:c.ink,borderRadius:9,alignItems:'center',justifyContent:'center',backgroundColor:c.card},secondaryText:{color:c.ink,fontWeight:'700',fontSize:12},account:{alignItems:'center',padding:12},accountText:{color:c.ink,fontSize:11},footer:{borderTopWidth:1,borderColor:c.line,marginTop:8,paddingTop:8,gap:7},badges:{color:c.ink,fontSize:9,fontWeight:'900',letterSpacing:.8},footText:{fontSize:9,lineHeight:13,color:c.muted},sectionKicker:{fontSize:9,letterSpacing:1,fontWeight:'800',color:c.orange,marginTop:24},sectionTitle:{fontSize:19,fontWeight:'900',color:c.ink,marginBottom:8},terminal:{minHeight:64,flexDirection:'row',alignItems:'center',gap:10,padding:10,borderRadius:12,borderWidth:1,borderColor:c.line,backgroundColor:c.card,marginBottom:7},terminalIcon:{width:35,height:35,borderRadius:11,backgroundColor:'#EEE5D2',alignItems:'center',justifyContent:'center'},terminalName:{fontSize:13,fontWeight:'800',color:c.ink},terminalMeta:{fontSize:10,color:c.muted,marginTop:3},arrow:{fontSize:23,color:c.muted},links:{flexDirection:'row',flexWrap:'wrap',gap:7,marginTop:16},quick:{paddingVertical:10,paddingHorizontal:13,borderRadius:9,backgroundColor:c.ink},quickText:{color:c.card,fontSize:11,fontWeight:'700'}});

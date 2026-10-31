@@ -1,0 +1,157 @@
+{
+  "apiRoutes": [],
+  "htmlRoutes": [
+    {
+      "file": "./index.tsx",
+      "page": "/index",
+      "namedRegex": "^/(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/index-87d92e5f93dfa5c5ae566048e9211b0c.js"
+        ]
+      }
+    },
+    {
+      "file": "./plan.tsx",
+      "page": "/plan",
+      "namedRegex": "^/plan(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/plan-94523db0aaf262ea9df5902432db37ce.js"
+        ]
+      }
+    },
+    {
+      "file": "./saved.tsx",
+      "page": "/saved",
+      "namedRegex": "^/saved(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/saved-8f9588e043a1acdccd86b9b72e5097d4.js"
+        ]
+      }
+    },
+    {
+      "file": "./nearby.tsx",
+      "page": "/nearby",
+      "namedRegex": "^/nearby(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/nearby-49e1575c24b49178b374e3cf4ec98a1f.js"
+        ]
+      }
+    },
+    {
+      "file": "./alerts.tsx",
+      "page": "/alerts",
+      "namedRegex": "^/alerts(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/alerts-7362151e52d1fc7506fc10754b2f6247.js"
+        ]
+      }
+    },
+    {
+      "file": "./profile.tsx",
+      "page": "/profile",
+      "namedRegex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/profile-7f611e1aad8979bd8a97714d374e2f33.js"
+        ]
+      }
+    },
+    {
+      "file": "./explore.tsx",
+      "page": "/explore",
+      "namedRegex": "^/explore(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/explore-5b240c486cba8d302ae5804a596fe0ea.js"
+        ]
+      }
+    },
+    {
+      "file": "./account.tsx",
+      "page": "/account",
+      "namedRegex": "^/account(?:/)?$",
+      "routeKeys": {},
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js",
+          "/_expo/static/js/web/account-5f71b78140d9a99c0d06d3ad7dcef483.js"
+        ]
+      }
+    },
+    {
+      "file": "expo-router/build/views/Sitemap.js",
+      "page": "/_sitemap",
+      "namedRegex": "^/_sitemap(?:/)?$",
+      "routeKeys": {},
+      "generated": true,
+      "assets": {
+        "css": [],
+        "js": [
+          "/_expo/static/js/web/_layout-916c96b300f044dd94c5ef5e6264f64e.js"
+        ]
+      }
+    }
+  ],
+  "notFoundRoutes": [
+    {
+      "file": "expo-router/build/views/Unmatched.js",
+      "page": "/+not-found",
+      "namedRegex": "^(?:/(?<notfound>.+?))?(?:/)?$",
+      "routeKeys": {
+        "notfound": "not-found"
+      },
+      "generated": true
+    }
+  ],
+  "redirects": [],
+  "rewrites": [],
+  "assets": {
+    "css": [
+      {
+        "type": "css",
+        "href": "/_expo/static/css/animated-icon.module-eec65aa47fc61787231f45ae14d688f6.css"
+      },
+      {
+        "type": "css",
+        "href": "/_expo/static/css/global-87fd0564cfa78f37afcb8d7603e15d75.css"
+      }
+    ],
+    "js": [
+      "/_expo/static/js/web/__expo-metro-runtime-9f1a7b6acd20011e290bc79f0164ae37.js",
+      "/_expo/static/js/web/__common-6d34d5cce724d3d55578a2db51c45f87.js",
+      "/_expo/static/js/web/entry-5063f6bcd07e08957f86b87b22f6c32e.js"
+    ],
+    "favicon": "/favicon.ico"
+  },
+  "rendering": {
+    "mode": "ssr",
+    "file": "_expo/server/render.js"
+  }
+}

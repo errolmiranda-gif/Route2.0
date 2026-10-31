@@ -1,180 +1,30 @@
-import { Image } from 'expo-image';
-import { SymbolView } from 'expo-symbols';
-import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useMemo, useState } from 'react';
+import { Link } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ExternalLink } from '@/components/external-link';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Collapsible } from '@/components/ui/collapsible';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
-
-export default function TabTwoScreen() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const insets = {
-    ...safeAreaInsets,
-    bottom: safeAreaInsets.bottom + BottomTabInset + Spacing.three,
-  };
-  const theme = useTheme();
-
-  const contentPlatformStyle = Platform.select({
-    android: {
-      paddingTop: insets.top,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
-      paddingBottom: insets.bottom,
-    },
-    web: {
-      paddingTop: Spacing.six,
-      paddingBottom: Spacing.four,
-    },
-  });
-
-  return (
-    <ScrollView
-      style={[styles.scrollView, { backgroundColor: theme.background }]}
-      contentInset={insets}
-      contentContainerStyle={[styles.contentContainer, contentPlatformStyle]}>
-      <ThemedView style={styles.container}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="subtitle">Explore</ThemedText>
-          <ThemedText style={styles.centerText} themeColor="textSecondary">
-            This starter app includes example{'\n'}code to help you get started.
-          </ThemedText>
-
-          <ExternalLink href="https://docs.expo.dev" asChild>
-            <Pressable style={({ pressed }) => pressed && styles.pressed}>
-              <ThemedView type="backgroundElement" style={styles.linkButton}>
-                <ThemedText type="link">Expo documentation</ThemedText>
-                <SymbolView
-                  tintColor={theme.text}
-                  name={{ ios: 'arrow.up.right.square', android: 'link', web: 'link' }}
-                  size={12}
-                />
-              </ThemedView>
-            </Pressable>
-          </ExternalLink>
-        </ThemedView>
-
-        <ThemedView style={styles.sectionsWrapper}>
-          <Collapsible title="File-based routing">
-            <ThemedText type="small">
-              This app has two screens: <ThemedText type="code">src/app/index.tsx</ThemedText> and{' '}
-              <ThemedText type="code">src/app/explore.tsx</ThemedText>
-            </ThemedText>
-            <ThemedText type="small">
-              The layout file in <ThemedText type="code">src/app/_layout.tsx</ThemedText> sets up
-              the tab navigator.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/router/introduction">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
-
-          <Collapsible title="Android, iOS, and web support">
-            <ThemedView type="backgroundElement" style={styles.collapsibleContent}>
-              <ThemedText type="small">
-                You can open this project on Android, iOS, and the web. To open the web version,
-                press <ThemedText type="smallBold">w</ThemedText> in the terminal running this
-                project.
-              </ThemedText>
-              <Image
-                source={require('@/assets/images/tutorial-web.png')}
-                style={styles.imageTutorial}
-              />
-            </ThemedView>
-          </Collapsible>
-
-          <Collapsible title="Images">
-            <ThemedText type="small">
-              For static images, you can use the <ThemedText type="code">@2x</ThemedText> and{' '}
-              <ThemedText type="code">@3x</ThemedText> suffixes to provide files for different
-              screen densities.
-            </ThemedText>
-            <Image source={require('@/assets/images/react-logo.png')} style={styles.imageReact} />
-            <ExternalLink href="https://reactnative.dev/docs/images">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
-
-          <Collapsible title="Light and dark mode components">
-            <ThemedText type="small">
-              This template has light and dark mode support. The{' '}
-              <ThemedText type="code">useColorScheme()</ThemedText> hook lets you inspect what the
-              user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
-
-          <Collapsible title="Animations">
-            <ThemedText type="small">
-              This template includes an example of an animated component. The{' '}
-              <ThemedText type="code">src/components/ui/collapsible.tsx</ThemedText> component uses
-              the powerful <ThemedText type="code">react-native-reanimated</ThemedText> library to
-              animate opening this hint.
-            </ThemedText>
-          </Collapsible>
-        </ThemedView>
-        {Platform.OS === 'web' && <WebBadge />}
-      </ThemedView>
-    </ScrollView>
-  );
+type Ride='Jeepney'|'Bus'|'Tricycle';type Stop={id:string;name:string;area:string;x:number;y:number;rides:Ride[];note:string};
+const stops:Stop[]=[
+ {id:'manggahan',name:'Manggahan Terminal',area:'Manggahan',x:49,y:24,rides:['Jeepney','Tricycle'],note:'Governor’s Drive · sample corridor'},
+ {id:'poblacion',name:'Poblacion Terminal',area:'Governor Ferrer',x:38,y:43,rides:['Jeepney','Bus','Tricycle'],note:'Modelled connection near the municipal center'},
+ {id:'pasong',name:'Pasong Camachile Terminal',area:'Pasong Camachile',x:61,y:59,rides:['Jeepney','Bus'],note:'Arnaldo Highway · sample corridor'},
+ {id:'javalera',name:'Javalera Terminal',area:'Javalera',x:29,y:75,rides:['Jeepney','Tricycle'],note:'Manggahan–Javalera upland road'},
+ {id:'bacao',name:'Bacao Transport Bay',area:'Bacao I',x:73,y:39,rides:['Jeepney','Bus'],note:'Governor’s Drive · sample corridor'},
+ {id:'biclatan',name:'Biclatan Stop',area:'Biclatan',x:52,y:78,rides:['Jeepney','Tricycle'],note:'Illustrative local connection'},
+ {id:'navarro',name:'Navarro Terminal',area:'Navarro',x:23,y:53,rides:['Jeepney','Bus'],note:'Illustrative General Trias stop'},
+ {id:'santiago',name:'Santiago Terminal',area:'Santiago',x:78,y:66,rides:['Jeepney','Tricycle'],note:'Illustrative local connection'},
+ {id:'governor',name:'Governor Ferrer Stop',area:'Governor Ferrer',x:18,y:35,rides:['Jeepney','Bus'],note:'Sample stop · departures are not live'},
+];
+const colors:Record<Ride,string>={Jeepney:'#E7AE28',Bus:'#5277BB',Tricycle:'#438875'};
+export default function ExploreScreen(){
+ const [ride,setRide]=useState<Ride|'All'>('All');const [selected,setSelected]=useState<Stop|null>(null);const [query,setQuery]=useState('');const [map,setMap]=useState(true);const [saved,setSaved]=useState<string[]>([]);
+ const visible=useMemo(()=>stops.filter(x=>(ride==='All'||x.rides.includes(ride))&&`${x.name} ${x.area}`.toLowerCase().includes(query.trim().toLowerCase())),[ride,query]);
+ return <SafeAreaView style={s.safe} edges={['top','left','right']}><View style={s.mapArea}>
+  {map?<View style={s.map}><View style={s.boundary}/><View style={s.gridV}/><View style={s.gridH}/><View style={[s.line,{top:'44%',left:'11%',width:'72%',backgroundColor:colors.Jeepney,transform:[{rotate:'52deg'}]}]}/><View style={[s.line,{top:'51%',left:'10%',width:'76%',backgroundColor:colors.Tricycle,transform:[{rotate:'13deg'}]}]}/><View style={[s.line,{top:'55%',left:'25%',width:'64%',backgroundColor:colors.Bus,transform:[{rotate:'-52deg'}]}]}/><Text style={s.mapName}>GENERAL TRIAS</Text>{visible.map(st=><Pressable key={st.id} onPress={()=>setSelected(st)} style={[s.marker,{left:`${st.x}%`,top:`${st.y}%`},selected?.id===st.id&&s.markerOn]}><View style={s.pin}><Text style={{color:colors[st.rides[0]],fontWeight:'900',fontSize:18}}>⌖</Text></View><Text style={s.markerLabel}>{st.area}</Text></Pressable>)}<View style={s.mapNote}><Text style={s.small}>Illustrative map · not live GPS</Text></View></View>:<ScrollView contentContainerStyle={s.list}>{visible.map(st=><Pressable key={st.id} onPress={()=>setSelected(st)} style={s.row}><View style={s.symbol}><Text style={s.symbolText}>▤</Text></View><View style={{flex:1}}><Text style={s.rowTitle}>{st.name}</Text><Text style={s.small}>{st.area} · {st.rides.join(', ')}</Text></View><Text style={s.chevron}>›</Text></Pressable>)}</ScrollView>}
+  <View style={s.overlay}><Text style={s.kicker}>GENERAL TRIAS COMMUTE</Text><Text style={s.heading}>Explore</Text><View style={s.search}><Text style={{fontSize:20,color:'#5D7169'}}>⌕</Text><TextInput value={query} onChangeText={setQuery} placeholder="Where do you want to go?" placeholderTextColor="#718078" style={s.input}/>{query?<Pressable onPress={()=>setQuery('')}><Text style={s.clear}>×</Text></Pressable>:null}</View><ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.filters}>{(['All','Jeepney','Bus','Tricycle'] as const).map(x=><Pressable key={x} onPress={()=>setRide(x)} style={[s.filter,ride===x&&s.active]}><Text style={[s.filterText,ride===x&&s.activeText]}>{x==='All'?'All rides':x}</Text></Pressable>)}</ScrollView></View>
+  <View style={s.controls}><Pressable style={s.control} onPress={()=>setMap(!map)}><Text style={s.controlText}>{map?'☷':'⌖'}</Text></Pressable><Link href="/nearby" asChild><Pressable style={s.control}><Text style={s.controlText}>＋</Text></Pressable></Link></View>
+  {selected&&<View style={s.detail}><Pressable onPress={()=>setSelected(null)} style={s.dismiss}><Text style={s.small}>Close ×</Text></Pressable><Text style={s.kicker}>{selected.area.toUpperCase()} · TERMINAL</Text><Text style={s.detailTitle}>{selected.name}</Text><Text style={s.small}>{selected.note}</Text><View style={s.tags}>{selected.rides.map(x=><View key={x} style={[s.tag,{backgroundColor:`${colors[x]}26`}]}><Text style={{color:'#17372F',fontSize:10,fontWeight:'700'}}>{x}</Text></View>)}</View><View style={s.actions}><Link href={{pathname:'/plan',params:{from:selected.name}}} asChild><Pressable style={s.button}><Text style={s.buttonText}>Plan from here</Text></Pressable></Link><Pressable onPress={()=>setSaved(v=>v.includes(selected.id)?v.filter(x=>x!==selected.id):[...v,selected.id])} style={s.outline}><Text style={s.outlineText}>{saved.includes(selected.id)?'Saved ★':'Save ♧'}</Text></Pressable></View><Text style={s.small}>Sample information · not live</Text></View>}
+  {!selected&&<View style={s.legend}><Text style={s.legendTitle}>RIDE LINES</Text>{(['Jeepney','Bus','Tricycle'] as Ride[]).map(x=><View key={x} style={s.legendRow}><View style={[s.swatch,{backgroundColor:colors[x]}]}/><Text style={s.small}>{x}</Text></View>)}<Text style={[s.small,{marginTop:7}]}>{visible.length} of 9 sample terminals</Text></View>}
+ </View></SafeAreaView>
 }
-
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  container: {
-    maxWidth: MaxContentWidth,
-    flexGrow: 1,
-  },
-  titleContainer: {
-    gap: Spacing.three,
-    alignItems: 'center',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.six,
-  },
-  centerText: {
-    textAlign: 'center',
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  linkButton: {
-    flexDirection: 'row',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.five,
-    justifyContent: 'center',
-    gap: Spacing.one,
-    alignItems: 'center',
-  },
-  sectionsWrapper: {
-    gap: Spacing.five,
-    paddingHorizontal: Spacing.four,
-    paddingTop: Spacing.three,
-  },
-  collapsibleContent: {
-    alignItems: 'center',
-  },
-  imageTutorial: {
-    width: '100%',
-    aspectRatio: 296 / 171,
-    borderRadius: Spacing.three,
-    marginTop: Spacing.two,
-  },
-  imageReact: {
-    width: 100,
-    height: 100,
-    alignSelf: 'center',
-  },
-});
+const s=StyleSheet.create({safe:{flex:1,backgroundColor:'#F3EDDF'},mapArea:{flex:1,overflow:'hidden',backgroundColor:'#EAE5D7'},map:{...StyleSheet.absoluteFill,overflow:'hidden',backgroundColor:'#EAE5D7'},boundary:{position:'absolute',left:'14%',top:'15%',width:'72%',height:'72%',borderWidth:3,borderStyle:'dashed',borderColor:'#C7BBA4',borderRadius:150,backgroundColor:'#F5F0E3AA'},gridV:{position:'absolute',left:'43%',top:'12%',bottom:'12%',width:1,backgroundColor:'#D8CEBA'},gridH:{position:'absolute',left:'12%',right:'10%',top:'47%',height:1,backgroundColor:'#D8CEBA'},line:{position:'absolute',height:8,borderRadius:8,opacity:.9,borderWidth:1,borderColor:'#FBF8EF'},mapName:{position:'absolute',top:'19%',left:'39%',fontSize:9,fontWeight:'900',letterSpacing:1,color:'#A59984'},marker:{position:'absolute',alignItems:'center',marginLeft:-14,marginTop:-10,zIndex:2},markerOn:{zIndex:10,transform:[{scale:1.12}]},pin:{width:32,height:32,borderRadius:11,backgroundColor:'#17372F',borderWidth:2,borderColor:'#FBF8EF',alignItems:'center',justifyContent:'center',elevation:3},markerLabel:{fontSize:9,fontWeight:'700',color:'#17372F',backgroundColor:'#FBF8EFDD',paddingHorizontal:4,borderRadius:4,marginTop:2},mapNote:{position:'absolute',left:12,bottom:14,backgroundColor:'#FBF8EF',paddingHorizontal:9,paddingVertical:6,borderRadius:8},overlay:{position:'absolute',top:10,left:14,right:14},kicker:{fontSize:9,fontWeight:'900',letterSpacing:1.2,color:'#5D7169'},heading:{fontSize:28,fontWeight:'900',color:'#17372F',marginVertical:5},search:{height:49,flexDirection:'row',alignItems:'center',gap:8,paddingHorizontal:13,borderRadius:13,backgroundColor:'#FBF8EF',elevation:3},input:{flex:1,fontSize:14,color:'#17372F'},clear:{fontSize:21,color:'#5D7169'},filters:{gap:7,paddingVertical:9},filter:{paddingHorizontal:13,paddingVertical:9,borderRadius:20,backgroundColor:'#FBF8EF',borderWidth:1,borderColor:'#D7CBB4'},active:{backgroundColor:'#17372F',borderColor:'#17372F'},filterText:{fontSize:11,fontWeight:'700',color:'#17372F'},activeText:{color:'#fff'},controls:{position:'absolute',right:13,top:154,gap:7},control:{width:42,height:42,borderRadius:12,alignItems:'center',justifyContent:'center',backgroundColor:'#FBF8EF',elevation:3},controlText:{fontSize:21,color:'#17372F'},legend:{position:'absolute',left:12,bottom:14,padding:12,borderRadius:12,backgroundColor:'#FBF8EF',minWidth:140,elevation:3},legendTitle:{fontSize:9,fontWeight:'900',letterSpacing:1,color:'#5D7169',marginBottom:5},legendRow:{flexDirection:'row',alignItems:'center',gap:6,marginTop:4},swatch:{width:16,height:3,borderRadius:3},small:{fontSize:10,color:'#5D7169',lineHeight:14},detail:{position:'absolute',left:10,right:10,bottom:10,padding:15,borderRadius:17,backgroundColor:'#FBF8EF',elevation:8},dismiss:{alignSelf:'flex-end',paddingBottom:8},detailTitle:{fontSize:18,fontWeight:'900',color:'#17372F',marginVertical:4},tags:{flexDirection:'row',gap:7,marginTop:10},tag:{paddingHorizontal:9,paddingVertical:6,borderRadius:8},actions:{flexDirection:'row',gap:8,marginVertical:10},button:{flex:1,minHeight:42,backgroundColor:'#E6561D',borderRadius:9,alignItems:'center',justifyContent:'center'},buttonText:{color:'#fff',fontWeight:'800',fontSize:12},outline:{paddingHorizontal:12,minHeight:42,borderWidth:1,borderColor:'#17372F',borderRadius:9,alignItems:'center',justifyContent:'center'},outlineText:{color:'#17372F',fontWeight:'700',fontSize:12},list:{paddingHorizontal:14,paddingTop:190,paddingBottom:24},row:{minHeight:65,flexDirection:'row',alignItems:'center',gap:10,padding:10,backgroundColor:'#FBF8EF',borderWidth:1,borderColor:'#D7CBB4',borderRadius:12,marginBottom:7},symbol:{width:38,height:38,borderRadius:12,backgroundColor:'#EEE5D2',alignItems:'center',justifyContent:'center'},symbolText:{color:'#17372F',fontSize:18},rowTitle:{fontSize:13,fontWeight:'800',color:'#17372F'},chevron:{fontSize:22,color:'#5D7169'}});
