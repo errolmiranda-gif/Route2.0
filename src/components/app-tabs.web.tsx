@@ -19,11 +19,11 @@ export default function AppTabs() {
           <TabTrigger name="home" href="/" asChild>
             <TabButton>Home</TabButton>
           </TabTrigger>
-          <TabTrigger name="explore" href="/explore" asChild>
+          <TabTrigger name="nearby" href="/nearby" asChild>
             <TabButton>Nearby</TabButton>
           </TabTrigger>
-          <TabTrigger name="alerts" href="/alerts" asChild>
-            <TabButton>Alerts</TabButton>
+          <TabTrigger name="plan" href="/plan" asChild>
+            <TabButton>Plan</TabButton>
           </TabTrigger>
           <TabTrigger name="saved" href="/saved" asChild>
             <TabButton>Saved</TabButton>
@@ -40,10 +40,11 @@ export default function AppTabs() {
 export function TabButton({ children, isFocused, ...props }: TabTriggerSlotProps) {
   // TabTrigger provides an href and internal ref that this Pressable does not need.
   const { href: _href, ref: _ref, ...pressableProps } = props;
+  const isPlan = String(children) === 'Plan';
   return (
-    <Pressable {...pressableProps} style={({ pressed }) => [styles.tabButton, isFocused && styles.tabFocused, pressed && styles.pressed]}>
-      <View style={[styles.tabIcon, isFocused && styles.tabIconFocused]}><Text style={[styles.tabGlyph,isFocused&&styles.tabGlyphFocused]}>{tabGlyph(String(children))}</Text></View>
-      <Text style={[styles.tabLabel,isFocused&&styles.tabLabelFocused]}>{children}</Text>
+    <Pressable {...pressableProps} style={({ pressed }) => [styles.tabButton, isFocused && (isPlan ? styles.planFocused : styles.tabFocused), pressed && styles.pressed]}>
+      <View style={[styles.tabIcon, isFocused && (isPlan ? styles.planIconFocused : styles.tabIconFocused)]}><Text style={[styles.tabGlyph,isFocused&&styles.tabGlyphFocused]}>{tabGlyph(String(children))}</Text></View>
+      <Text style={[styles.tabLabel,isFocused&&styles.tabLabelFocused, isFocused && isPlan && styles.planLabelFocused]}>{children}</Text>
     </Pressable>
   );
 }
@@ -66,9 +67,9 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FBF8EF',
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: '#D7CBB4',
+    borderTopColor: '#E3DED3',
   },
   innerContainer: {
     width: '100%',
@@ -86,15 +87,18 @@ const styles = StyleSheet.create({
     gap: 2,
     borderRadius: 9,
   },
-  tabFocused: { backgroundColor: '#F2EACF' },
+  tabFocused: { backgroundColor: '#E8EEE8' },
+  planFocused: { backgroundColor: '#10372E', borderRadius: 13, marginHorizontal: 7 },
   tabIcon: { width: 25, height: 25, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-  tabIconFocused: { backgroundColor: '#F5D96F' },
+  tabIconFocused: { backgroundColor: '#D2E1D8' },
+  planIconFocused: { backgroundColor: 'transparent' },
   tabGlyph: { color: '#777A74', fontSize: 17, fontWeight: '700' },
-  tabGlyphFocused: { color: '#17372F' },
-  tabLabel: { color: '#7B7B76', fontSize: 9, fontWeight: '700' },
-  tabLabelFocused: { color: '#17372F' },
+  tabGlyphFocused: { color: '#10372E' },
+  tabLabel: { color: '#777A74', fontSize: 9, fontWeight: '700' },
+  tabLabelFocused: { color: '#10372E' },
+  planLabelFocused: { color: '#FFFFFF' },
   pressed: { opacity: 0.7,
   },
 });
 
-function tabGlyph(label:string) { return ({Home:'⌂',Nearby:'⌖',Alerts:'♧',Saved:'♧',Profile:'♙'} as Record<string,string>)[label] ?? '•'; }
+function tabGlyph(label:string) { return ({Home:'⌂',Nearby:'◉',Plan:'⌘',Saved:'♧',Profile:'♙'} as Record<string,string>)[label] ?? '•'; }
