@@ -1,56 +1,55 @@
-# Welcome to your Expo app 👋
+# Route2.0 — Cavite Commute Guide
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile-first Expo app for exploring modeled commute routes, stops, fares, and sample departures in General Trias, Cavite. Route and departure information is illustrative; the app does not provide live transit data.
 
-## Get started
+## Getting access as a collaborator
 
-1. Install dependencies
+1. Ask the repository owner to invite your GitHub username. Accept the invitation from GitHub before opening the project. Read access lets you view and clone the code; write access is needed to push branches.
+2. Open the repository’s main page. Choose the **`<> Code`** dropdown, then **Codespaces**, and create a Codespace for the project’s default branch. On mobile, the direct link also works: `https://codespaces.new/OWNER/REPOSITORY` (replace the placeholders with the repository owner and name).
+3. In the Codespaces terminal, install the locked dependencies and start Expo’s development server:
 
-   ```bash
-   npm install
+   ```sh
+   npm ci
+   npx expo start --tunnel
    ```
 
-2. Start the app
+4. Open the development link on your phone in Expo Go. If you are using the same phone to access Codespaces, copy the Expo link from the terminal and open or paste it into Expo Go instead of scanning the QR code. The Codespace and tunnel are for development previews; this does not publish the app.
 
-   ```bash
-   npx expo start
-   ```
+If **Codespaces** is missing from the `<> Code` menu, use the direct link above. If GitHub says you cannot create a Codespace, ask the repository owner or organization admin whether Codespaces is enabled and available for this repository/account.
 
-In the output, you'll find options to open the app in a
+### Expo Go compatibility
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+This project uses Expo SDK 58, so the Expo Go app must support SDK 58. Android users can select a matching build at [expo.dev/go](https://expo.dev/go). On a physical iPhone, the App Store Expo Go currently does not support SDK 58; use a project development build instead.
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Run locally
 
-## Get a fresh project
+On a computer with Node.js installed, clone the repository, then run:
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+npm ci
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Use the terminal’s QR code to open the project on a compatible device, or follow the Expo CLI prompts for an emulator/simulator.
 
-### Other setup steps
+## Collaborator workflow
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- Create a branch for your change; avoid committing directly to the default branch.
+- Commit and push your branch, then open a pull request for review.
+- Do not commit `node_modules`, local `.expo` files, credentials, or API secrets.
 
-## Learn more
+## Useful commands
 
-To learn more about developing your project with Expo, look at the following resources:
+```sh
+npx expo lint
+npx tsc --noEmit
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Project structure
 
-## Join the community
+- `src/app/` — Expo Router screens and layouts.
+- `src/components/` — reusable app UI and screen components.
+- `src/data/` — illustrative General Trias route and transit data.
+- `src/lib/` — saved journeys and local preferences.
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+See the [Expo documentation](https://docs.expo.dev/) for general development help.
