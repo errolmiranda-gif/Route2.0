@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocalSearchParams } from 'expo-router';
 import type { Href } from 'expo-router';
-import { Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getPreference, removeSavedItem, setPreference, toggleSavedItem, usePreferenceRevision, useSavedItems } from '@/lib/saved-items';
 import { ExternalLink } from '@/components/external-link';
-import { findNetworkTrips, findNetworkTripsViaMany, generalTrias, getBarangayName, getRoutePreview, modeLabelsForStop, networkDisclaimer, networkLocations, rideLabel, ridesForTerminal } from '@/data/general-trias';
+import * as Location from 'expo-location';
+import { distanceKm, findNetworkTrips, findNetworkTripsViaMany, generalTrias, getBarangayName, getRoutePreview, modeLabelsForStop, networkDisclaimer, networkLocations, rideLabel, ridesForTerminal } from '@/data/general-trias';
 
 const C = { paper: '#F4F2EA', card: '#FFFFFF', ink: '#10372E', muted: '#66736E', line: '#E3DED3', orange: '#F05A2A', green: '#438875', gold: '#E7AE28', blue: '#5277BB' };
 type Ride = 'Jeepney' | 'Bus' | 'Tricycle' | 'Walk' | 'UV Express';
@@ -43,6 +44,10 @@ export default function GuideScreen({ screen }: { screen: Screen }) {
   const [nearbyRide, setNearbyRide] = useState<Ride | 'All'>(getPreference('nearbyRide', 'All'));
   const [nearbyArea, setNearbyArea] = useState('All areas');
   const [showAreaOptions, setShowAreaOptions] = useState(false);
+  const [showLocationRationale, setShowLocationRationale] = useState(false);
+  const [isRequestingLocation, setIsRequestingLocation] = useState(false);
+  const [locationNotice, setLocationNotice] = useState('');
+  const [alertRetryMessage, setAlertRetryMessage] = useState('');
   const [alertArea, setAlertArea] = useState('All');
   const [notice, setNotice] = useState('');
   const [recentTrips, setRecentTrips] = useState<{ from: string; to: string }[]>(() => getPreference('recentTrips', []));
@@ -127,6 +132,30 @@ export default function GuideScreen({ screen }: { screen: Screen }) {
     setPreferenceState(value);
     setPreference('tripPreference', value);
   };
+  const requestNearbyLocation = async () => {
+    setShowLocationRationale(false);
+    setIsRequestingLocation(true);
+    setLocationNotice('Finding the closest barangay...');
+    try {
+      const permission = await Location.requestForegroundPermissionsAsync();
+      if (permission.status !== 'granted') {
+        setLocationNotice('Location permission was not granted. Choose a barangay manually.');
+        return;
+      }
+      const current = await Location.getCurrentPositionAsync({});
+      const nearestBarangay = generalTrias.barangays.reduce((nearest, item) => {
+        const origin = { lat: current.coords.latitude, lng: current.coords.longitude };
+        return distanceKm(origin, item) < distanceKm(origin, nearest) ? item : nearest;
+      }, generalTrias.barangays[0]);
+      setNearbyArea(nearestBarangay.name);
+      setShowAreaOptions(false);
+      setLocationNotice(`Showing nearby places around ${nearestBarangay.name}. Your coordinates are not saved.`);
+    } catch {
+      setLocationNotice('Could not get your location. Choose a barangay manually.');
+    } finally {
+      setIsRequestingLocation(false);
+    }
+  };
   const filteredPlaces = nearbyLocations.filter((location) => location.name.toLowerCase().includes(query.trim().toLowerCase()) && (nearbyRide === 'All' || locationRides(location).includes(nearbyRide)) && (nearbyArea === 'All areas' || getBarangayName(location.barangayId) === nearbyArea));
   const nearbyAreas = ['All areas', ...generalTrias.barangays.map((item) => item.name)];
   const visibleSaved = savedItems.filter((item) => item.kind === (tab === 'Routes' ? 'route' : 'terminal'));
@@ -200,11 +229,8 @@ export default function GuideScreen({ screen }: { screen: Screen }) {
         {recentTrips.length > 0 && <View style={s.recent}><View style={s.recentHeader}><Text style={s.rowTitle}>Recent searches</Text><Pressable accessibilityRole="button" onPress={() => { setRecentTrips([]); setPreference('recentTrips', []); }}><Text style={s.removeText}>Clear</Text></Pressable></View>{recentTrips.map((item, index) => <Pressable accessibilityRole="button" key={`${item.from}-${item.to}-${index}`} onPress={() => { setFrom(item.from); setTo(item.to); setSearched(false); setNotice(''); }} style={s.recentItem}><Text style={s.rowTitle}>{item.from} → {item.to}</Text><Text style={s.rowSub}>Tap to plan again</Text></Pressable>)}</View>}
 
         {isSearchingRoute && <View accessibilityRole="progressbar" accessibilityLabel="Searching sample routes" accessibilityValue={{ min: 0, max: 100, now: searchProgress }} style={s.searchLoadingCard}>
-          <View style={s.searchLoadingHeading}><Text style={s.rowTitle}>Comparing route options</Text><Text style={s.searchPercent}>{searchProgress}%</Text></View>
+          <View style={s.searchLoadingHeading}><Text style={s.rowTitle}>Finding routes...</Text><Text style={s.searchPercent}>{searchProgress}%</Text></View>
           <View style={s.searchProgressTrack}><View style={[s.searchProgressFill, { width: `${searchProgress}%` }]}/></View>
-          <Text style={s.rowSub}>Matching stops · checking transfers · estimating fares</Text>
-          <View style={s.searchSkeletonCard}><View style={s.searchSkeletonTitle}/><View style={s.searchSkeletonLine}/><View style={s.searchSkeletonShort}/></View>
-          <View style={s.searchSkeletonCard}><View style={s.searchSkeletonTitle}/><View style={s.searchSkeletonLine}/></View>
         </View>}
         {notice ? <Text accessibilityLiveRegion="polite" style={s.notice}>{notice}</Text> : null}
         {searched && from && to && from !== to && <>
@@ -216,7 +242,14 @@ export default function GuideScreen({ screen }: { screen: Screen }) {
             <Text style={s.sampleCaption}>{trip.routeCodes.join(" · ")} · {trip.stopNames.join(" → ")} · {trip.headwayMin ? `every ${trip.headwayMin} min` : `service ${trip.firstTrip}–${trip.lastTrip}`}</Text>
             <Pressable accessibilityRole="button" accessibilityState={{ expanded: selectedTripId === trip.id }} onPress={() => setSelectedTripId(selectedTripId === trip.id ? null : trip.id)} style={s.detailsToggle}><Text style={s.detailsToggleText}>{selectedTripId === trip.id ? 'Hide route details' : 'View details'}  ›</Text></Pressable>
             {selectedTripId === trip.id && <View style={s.tripDetail}><Text style={s.detailHeading}>Your route</Text><Text style={s.rowTitle}>{from} → {to}</Text><Text style={s.rowSub}>Travel via {trip.road} using {trip.rides.join(" and ")}. Fare {tripFareLabel(trip)} estimated; about {trip.minutes} min. Service {trip.firstTrip}–{trip.lastTrip}. Operators: {trip.operators.join(", ")}.</Text></View>}
-          </View>) : <View style={s.empty}><Text style={s.emptyTitle}>No matching route</Text><Text style={s.sub}>Try a different origin, destination, or ride type. Here are modeled corridors:</Text>{generalTrias.routes.slice(0, 5).map((route) => { const trip = getRoutePreview(route); return <Pressable key={route.id} accessibilityRole="button" onPress={() => { setFrom(trip.from); setTo(trip.to); setRide('All'); setSearched(true); setNotice(''); }} style={s.modeledRow}><Text style={s.modeledGlyph}>⇄</Text><Text style={s.modeledText}>{trip.from} → {trip.to}</Text></Pressable>; })}</View>}
+          </View>) : <View style={s.emptyResults}>
+            <View style={s.emptyResultsIcon}><Text style={s.emptyResultsGlyph}>⌕</Text></View>
+            <Text style={s.emptyResultsTitle}>Walang nahanap — nothing found</Text>
+            <Text style={s.emptyResultsCopy}>No sample route connects these selected locations. This guide only models General Trias corridors.</Text>
+            <Pressable accessibilityRole="button" onPress={() => { setFrom(''); setTo(''); setOptionalStops([]); setSearched(false); setNotice(''); }} style={s.emptyResultsPrimary}><Text style={s.white}>Change locations</Text></Pressable>
+            <Text style={s.label}>MODELLED CORRIDORS</Text>
+            {generalTrias.routes.slice(0, 3).map((route) => { const trip = getRoutePreview(route); return <Pressable key={route.id} accessibilityRole="button" onPress={() => { setFrom(trip.from); setTo(trip.to); setOptionalStops([]); setRide('All'); setNotice(''); setSearched(false); searchTimers.current.forEach(clearTimeout); setIsSearchingRoute(true); setSearchProgress(20); searchTimers.current = [setTimeout(() => { setSearchProgress(100); setIsSearchingRoute(false); setSearched(true); }, 250)]; }} style={s.modeledRow}><Text style={s.modeledGlyph}>⇄</Text><Text style={s.modeledText}>{trip.from} → {trip.to}</Text></Pressable>; })}
+          </View>}
         </>}
         <Text style={s.planFooterNote}>{networkDisclaimer}</Text>
       </ScrollView>
@@ -234,7 +267,8 @@ export default function GuideScreen({ screen }: { screen: Screen }) {
     {screen === 'nearby' && <>
       <View style={s.nearbyHeading}><View><Text style={s.h2}>General Trias network</Text><Text style={s.sub}>Terminals and boarding stops · sample data</Text></View><Link href="/explore" asChild><Pressable accessibilityRole="link" accessibilityLabel="Open map explorer" style={s.mapButton}><Text style={s.mapButtonGlyph}>⌖</Text></Pressable></Link></View>
       <TextInput value={query} onChangeText={setQuery} placeholder="Search terminals, stops or areas" placeholderTextColor={C.muted} style={s.search}/>
-      <View style={s.areaBar}><Text style={s.areaGlyph}>⌖</Text><Text style={s.areaText}>Barangay · General Trias</Text><Pressable accessibilityRole="button" onPress={() => setShowAreaOptions((value) => !value)}><Text style={s.areaChange}>{showAreaOptions ? 'Done' : 'Change'}</Text></Pressable></View>
+      <View style={s.areaBar}><Text style={s.areaGlyph}>⌖</Text><Text style={s.areaText}>Barangay · General Trias</Text><Pressable accessibilityRole="button" disabled={isRequestingLocation} onPress={() => setShowLocationRationale(true)}><Text style={s.areaChange}>{isRequestingLocation ? 'Finding...' : 'Use location'}</Text></Pressable><Pressable accessibilityRole="button" onPress={() => setShowAreaOptions((value) => !value)}><Text style={s.areaChange}>{showAreaOptions ? 'Done' : 'Change'}</Text></Pressable></View>
+      {locationNotice ? <Text accessibilityLiveRegion="polite" style={s.locationNotice}>{locationNotice}</Text> : null}
       {showAreaOptions && <View style={s.areaOptions}>{nearbyAreas.map((area) => <Pressable key={area} onPress={() => { setNearbyArea(area); setShowAreaOptions(false); }} style={[s.chip, nearbyArea === area && s.active]}><Text style={[s.chipText, nearbyArea === area && s.white]}>{area}</Text></Pressable>)}</View>}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.pills}>{(['All', 'Jeepney', 'Bus', 'UV Express', 'Tricycle'] as const).map((type) => <Pressable key={type} accessibilityRole="button" accessibilityState={{ selected: nearbyRide === type }} onPress={() => { setNearbyRide(type); setStoredNearbyRide(type); }} style={[s.chip, nearbyRide === type && s.active]}><Text style={[s.chipText, nearbyRide === type && s.white]}>{type}</Text></Pressable>)}</ScrollView>
       <View style={s.nearbyCount}><Text style={s.h2}>{filteredPlaces.length} network locations</Text><Text style={s.rowSub}>Approximate map coordinates</Text></View>
@@ -245,9 +279,19 @@ export default function GuideScreen({ screen }: { screen: Screen }) {
 
     {screen === 'saved' && <><View style={s.segment}>{(['Routes', 'Terminals'] as SavedTab[]).map((item) => <Pressable accessibilityRole="button" accessibilityState={{ selected: tab === item }} key={item} onPress={() => setTab(item)} style={[s.segmentItem, tab === item && s.segmentSelected]}><Text style={s.chipText}>{item} ({savedItems.filter((saved) => saved.kind === (item === 'Routes' ? 'route' : 'terminal')).length})</Text></Pressable>)}</View>{visibleSaved.length === 0 ? <View style={s.empty}><View style={s.emptyIcon}><Text style={s.emptyGlyph}>☆</Text></View><Text style={s.emptyTitle}>No saved {tab.toLowerCase()} yet</Text><Text style={s.sub}>Save routes and stops to keep them together on this device.</Text><Link href={tab === 'Routes' ? '/plan' : '/nearby'} asChild><Pressable style={s.button}><Text style={s.white}>{tab === 'Routes' ? 'Find a route' : 'Browse terminals'}</Text></Pressable></Link></View> : visibleSaved.map((item) => <View key={item.id} style={s.savedCard}><View style={s.savedCardHead}><View style={s.terminalIcon}><Text style={s.rideIcon}>{item.kind === 'route' ? '⇄' : '⌖'}</Text></View><View style={s.savedInfo}><Text style={s.rowTitle}>{item.title}</Text><Text style={s.rowSub}>{item.subtitle}</Text></View><Pressable accessibilityRole="button" accessibilityLabel={`Remove ${item.title} from saved`} onPress={() => removeSavedItem(item.id)} style={s.removeButton}><Text style={s.removeText}>Remove</Text></Pressable></View>{item.kind === 'route' && item.from && item.to ? <View style={s.savedActions}><Link href={{ pathname: '/plan', params: { from: item.from, to: item.to } }} asChild><Pressable style={s.savedActionPrimary}><Text style={s.savedActionPrimaryText}>View details ›</Text></Pressable></Link><ExternalLink href={`https://www.google.com/maps/dir/?api=1&travelmode=transit&origin=${encodeURIComponent(`${item.from}, General Trias, Cavite`)}&destination=${encodeURIComponent(`${item.to}, General Trias, Cavite`)}`} style={s.savedAction}><Text style={s.mapDirectionsText}>Directions ↗</Text></ExternalLink></View> : <Link href={{ pathname: '/explore', params: { terminal: item.title } }} asChild><Pressable style={s.savedAction}><Text style={s.mapDirectionsText}>Terminal details ›</Text></Pressable></Link>}</View>)}<Text style={s.note}>Saved journeys and stops are stored on this device only.</Text></>}
 
-    {screen === 'alerts' && <><View style={s.card}><Text style={s.h2}>Live departures unavailable</Text><Text style={s.sub}>No connected operator feed. The timetable below is illustrative—confirm times and routes at the terminal.</Text></View><View style={s.segment}>{(['All', 'Route updates', 'Schedules'] as const).map((item) => <Pressable accessibilityRole="button" accessibilityState={{ selected: alertTab === item }} key={item} onPress={() => setAlertTab(item)} style={[s.segmentItem, alertTab === item && s.segmentSelected]}><Text style={s.chipText}>{item}</Text></Pressable>)}</View><ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.pills}>{alertAreas.map((area) => <Pressable key={area} accessibilityRole="button" accessibilityState={{ selected: alertArea === area }} onPress={() => setAlertArea(area)} style={[s.chip, alertArea === area && s.active]}><Text style={[s.chipText, alertArea === area && s.white]}>{area}</Text></Pressable>)}</ScrollView>{!showSampleAlerts ? <View style={s.empty}><Text style={s.emptyTitle}>Sample notices are hidden</Text><Text style={s.sub}>Turn them back on in Profile if you want to preview the example board.</Text><Link href="/profile" asChild><Pressable style={s.button}><Text style={s.white}>Open travel preferences</Text></Pressable></Link></View> : <>{alertTab !== 'Route updates' && <View style={s.scheduleCard}><View style={s.scheduleHeader}><Text style={s.rowTitle}>Illustrative timetable</Text><Text style={s.badge}>SAMPLE</Text></View><Text style={s.rowSub}>Departure examples · not connected to a live schedule</Text>{getAlerts().filter((item) => item.kind === 'schedule' && (alertArea === 'All' || item.area === alertArea)).map((item) => <View key={item.label} style={s.scheduleRow}><Text style={s.scheduleTime}>{item.time}</Text><Text style={s.scheduleMode}>{rideGlyph(item.mode ?? 'Jeepney')}</Text><View style={s.scheduleInfo}><Text style={s.rowTitle}>{item.title}</Text><Text style={s.rowSub}>{item.body}</Text></View></View>)}<View style={s.scheduleFoot}><Text style={s.rowSub}>Times shown are examples, not a connected database.</Text></View></View>}{alertTab !== 'Schedules' && <><View style={s.nearbyCount}><Text style={s.h2}>Advisories</Text><Text style={s.rowSub}>{getAlerts().filter((item) => item.kind === 'update' && (alertArea === 'All' || item.area === alertArea)).length} examples</Text></View>{getAlerts().filter((item) => item.kind === 'update' && (alertArea === 'All' || item.area === alertArea)).map((item, index) => <View key={item.label} style={[s.alert, { borderLeftColor: [C.orange, C.gold, C.blue][index % 3] }]}><View style={s.alertHeading}><Text style={s.alertIcon}>△</Text><Text style={s.label}>{item.label}</Text><Text style={s.badge}>SAMPLE</Text></View><Text style={s.rowTitle}>{item.title}</Text><Text style={s.sub}>{item.body}</Text><Text style={s.rowSub}>{item.area} · illustrative notice</Text></View>)}</>}</>}</>}
+    {screen === 'alerts' && <><View style={s.departureUnavailable}><View style={s.departureUnavailableIcon}><Text style={s.departureUnavailableGlyph}>!</Text></View><Text style={s.emptyResultsTitle}>Live departures unavailable</Text><Text style={s.emptyResultsCopy}>We cannot reach a departure feed for this terminal. The sample timetable below is clearly labelled.</Text><Link href={{ pathname: '/explore', params: { terminal: generalTrias.terminals[0].name } }} asChild><Pressable accessibilityRole="link" style={s.emptyResultsPrimary}><Text style={s.white}>View sample terminal</Text></Pressable></Link><Pressable accessibilityRole="button" onPress={() => setAlertRetryMessage("Live departures remain unavailable. Showing the labelled sample timetable.")} style={s.departureRetry}><Text style={s.outlineText}>Try again</Text></Pressable></View>{alertRetryMessage ? <Text accessibilityLiveRegion="polite" style={s.locationNotice}>{alertRetryMessage}</Text> : null}<View style={s.segment}>{(['All', 'Route updates', 'Schedules'] as const).map((item) => <Pressable accessibilityRole="button" accessibilityState={{ selected: alertTab === item }} key={item} onPress={() => setAlertTab(item)} style={[s.segmentItem, alertTab === item && s.segmentSelected]}><Text style={s.chipText}>{item}</Text></Pressable>)}</View><ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.pills}>{alertAreas.map((area) => <Pressable key={area} accessibilityRole="button" accessibilityState={{ selected: alertArea === area }} onPress={() => setAlertArea(area)} style={[s.chip, alertArea === area && s.active]}><Text style={[s.chipText, alertArea === area && s.white]}>{area}</Text></Pressable>)}</ScrollView>{!showSampleAlerts ? <View style={s.empty}><Text style={s.emptyTitle}>Sample notices are hidden</Text><Text style={s.sub}>Turn them back on in Profile if you want to preview the example board.</Text><Link href="/profile" asChild><Pressable style={s.button}><Text style={s.white}>Open travel preferences</Text></Pressable></Link></View> : <>{alertTab !== 'Route updates' && <View style={s.scheduleCard}><View style={s.scheduleHeader}><Text style={s.rowTitle}>Illustrative timetable</Text><Text style={s.badge}>SAMPLE</Text></View><Text style={s.rowSub}>Departure examples · not connected to a live schedule</Text>{getAlerts().filter((item) => item.kind === 'schedule' && (alertArea === 'All' || item.area === alertArea)).map((item) => <View key={item.label} style={s.scheduleRow}><Text style={s.scheduleTime}>{item.time}</Text><Text style={s.scheduleMode}>{rideGlyph(item.mode ?? 'Jeepney')}</Text><View style={s.scheduleInfo}><Text style={s.rowTitle}>{item.title}</Text><Text style={s.rowSub}>{item.body}</Text></View></View>)}<View style={s.scheduleFoot}><Text style={s.rowSub}>Times shown are examples, not a connected database.</Text></View></View>}{alertTab !== 'Schedules' && <><View style={s.nearbyCount}><Text style={s.h2}>Advisories</Text><Text style={s.rowSub}>{getAlerts().filter((item) => item.kind === 'update' && (alertArea === 'All' || item.area === alertArea)).length} examples</Text></View>{getAlerts().filter((item) => item.kind === 'update' && (alertArea === 'All' || item.area === alertArea)).map((item, index) => <View key={item.label} style={[s.alert, { borderLeftColor: [C.orange, C.gold, C.blue][index % 3] }]}><View style={s.alertHeading}><Text style={s.alertIcon}>△</Text><Text style={s.label}>{item.label}</Text><Text style={s.badge}>SAMPLE</Text></View><Text style={s.rowTitle}>{item.title}</Text><Text style={s.sub}>{item.body}</Text><Text style={s.rowSub}>{item.area} · illustrative notice</Text></View>)}</>}</>}</>}
 
     {screen === 'profile' && <><View style={s.profile}><View style={s.profileTop}><View style={s.avatar}><Text style={s.white}>{riderName ? riderName.trim().slice(0, 1).toUpperCase() : 'G'}</Text></View><View style={s.profileIdentity}><Text style={s.profileName}>{riderName || 'Guest commuter'}</Text><Text style={s.profileHint}>Saved on this device</Text></View><Text style={s.profileBadge}>GUEST</Text></View><View style={s.profileStats}><View style={s.profileStat}><Text style={s.statValue}>{savedItems.filter((item) => item.kind === 'route').length}</Text><Text style={s.statLabel}>saved routes</Text></View><View style={s.profileStat}><Text style={s.statValue}>{savedItems.filter((item) => item.kind === 'terminal').length}</Text><Text style={s.statLabel}>saved stops</Text></View><View style={s.profileStat}><Text style={s.statValue}>{recentTrips.length}</Text><Text style={s.statLabel}>recent trips</Text></View></View><Link href={{ pathname: '/account', params: { returnTo: 'profile' } }} asChild><Pressable accessibilityRole="link" style={s.profileAction}><Text style={s.profileActionText}>Edit rider profile</Text></Pressable></Link></View><Text style={s.h2}>Travel preferences</Text><View style={s.card}><Text style={s.label}>DEFAULT RIDE TYPES</Text><View style={s.pills}>{(['All', 'Jeepney', 'Bus', 'Tricycle', 'Walk'] as const).map((type) => <Pressable key={type} accessibilityRole="button" accessibilityState={{ selected: defaultRide === type }} onPress={() => chooseDefaultRide(type)} style={[s.chip, defaultRide === type && s.active]}><Text style={[s.chipText, defaultRide === type && s.white]}>{rideGlyph(type)}  {type}</Text></Pressable>)}</View><View style={s.cardDivider}/><Text style={s.label}>ROUTE PREFERENCE</Text><View style={s.segment}>{(['Fewest transfers', 'Lowest sample fare', 'Shortest estimate'] as const).map((item) => <Pressable key={item} accessibilityRole="button" accessibilityState={{ selected: preference === item }} onPress={() => chooseTripPreference(item)} style={[s.segmentItem, preference === item && s.segmentSelected]}><Text style={s.chipText}>{item}</Text></Pressable>)}</View><View style={s.setting}><View style={s.preferenceCopy}><Text style={s.rowTitle}>Show sample service notices</Text><Text style={s.rowSub}>Controls example cards in Alerts. No push notifications are sent.</Text></View><Pressable accessibilityRole="switch" accessibilityState={{ checked: showSampleAlerts }} onPress={() => { const next = !showSampleAlerts; setShowSampleAlerts(next); setPreference('showSampleAlerts', next); }} style={[s.toggle, showSampleAlerts && s.toggleOn]}><View style={[s.toggleKnob, showSampleAlerts && s.toggleKnobOn]}/></Pressable></View></View><View style={s.card}><Text style={s.label}>ABOUT THIS GUIDE</Text><Text style={s.sub}>{networkDisclaimer}</Text></View></>}
+    <Modal visible={showLocationRationale} transparent animationType="fade" onRequestClose={() => setShowLocationRationale(false)}>
+      <View style={s.locationBackdrop}><View style={s.locationModal}>
+        <View style={s.locationModalIcon}><Text style={s.locationModalGlyph}>⌖</Text></View>
+        <Text style={s.emptyResultsTitle}>Use your location?</Text>
+        <Text style={s.emptyResultsCopy}>Cavite Commute Guide uses your approximate area to sort nearby terminals and suggest a starting point. Your coordinates are not saved.</Text>
+        <Pressable accessibilityRole="button" disabled={isRequestingLocation} onPress={requestNearbyLocation} style={s.emptyResultsPrimary}><Text style={s.white}>{isRequestingLocation ? 'Checking permission...' : 'Allow while using'}</Text></Pressable>
+        <Pressable accessibilityRole="button" onPress={() => setShowLocationRationale(false)} style={s.departureRetry}><Text style={s.outlineText}>Not now</Text></Pressable>
+        <Text style={s.rowSub}>You can change this later in Profile.</Text>
+      </View></View>
+    </Modal>
   </ScrollView></SafeAreaView>;
 }
 
@@ -404,10 +448,6 @@ const s = StyleSheet.create({
   searchPercent: { color: C.green, fontSize: 10, fontWeight: '900' },
   searchProgressTrack: { height: 5, overflow: 'hidden', borderRadius: 4, backgroundColor: '#E5EAE5', marginTop: 9 },
   searchProgressFill: { height: 5, borderRadius: 4, backgroundColor: C.green },
-  searchSkeletonCard: { minHeight: 63, justifyContent: 'center', gap: 7, padding: 10, marginTop: 9, borderWidth: 1, borderColor: '#EEEAE0', borderRadius: 10, backgroundColor: '#F8F7F2' },
-  searchSkeletonTitle: { width: '54%', height: 8, borderRadius: 5, backgroundColor: '#DDE3DD' },
-  searchSkeletonLine: { width: '91%', height: 6, borderRadius: 4, backgroundColor: '#E6E8E2' },
-  searchSkeletonShort: { width: '42%', height: 6, borderRadius: 4, backgroundColor: '#E6E8E2' },
   search: { height: 46, borderWidth: 1, borderColor: C.line, borderRadius: 11, backgroundColor: C.card, paddingHorizontal: 13, marginTop: 9, color: C.ink, fontSize: 12 },
   empty: { alignItems: 'center', padding: 19, marginTop: 8, borderWidth: 1, borderRadius: 16, borderColor: C.line, backgroundColor: C.card },
   save: { color: C.ink, fontSize: 16, padding: 8 },
@@ -464,6 +504,21 @@ const s = StyleSheet.create({
   emptyIcon: { width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25, backgroundColor: '#E8EEE8', marginBottom: 10 },
   emptyGlyph: { color: C.green, fontSize: 26 },
   emptyTitle: { color: C.ink, fontSize: 15, fontWeight: '900', textAlign: 'center', marginBottom: 4 },
+  emptyResults: { alignItems: 'center', padding: 15, marginTop: 8, borderWidth: 1, borderColor: C.line, borderRadius: 15, backgroundColor: C.card },
+  emptyResultsIcon: { width: 52, height: 52, alignItems: 'center', justifyContent: 'center', borderRadius: 26, backgroundColor: '#E8EEE8', marginBottom: 10 },
+  emptyResultsGlyph: { color: C.ink, fontSize: 27 },
+  emptyResultsTitle: { color: C.ink, fontSize: 14, lineHeight: 19, fontWeight: '900', textAlign: 'center', marginBottom: 5 },
+  emptyResultsCopy: { color: C.muted, fontSize: 10, lineHeight: 15, textAlign: 'center', marginBottom: 10 },
+  emptyResultsPrimary: { minHeight: 40, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', borderRadius: 9, backgroundColor: C.ink, marginTop: 3, marginBottom: 7 },
+  departureUnavailable: { alignItems: 'center', paddingHorizontal: 15, paddingTop: 13, paddingBottom: 11, borderRadius: 14, backgroundColor: C.paper },
+  departureUnavailableIcon: { width: 50, height: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 25, backgroundColor: '#F8EDD8', marginBottom: 9 },
+  departureUnavailableGlyph: { color: '#C88319', fontSize: 25 },
+  departureRetry: { minHeight: 39, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: C.line, borderRadius: 9, backgroundColor: C.card, marginTop: 6 },
+  locationNotice: { color: C.muted, fontSize: 9, lineHeight: 14, marginTop: 5, padding: 9, borderRadius: 9, backgroundColor: '#E8EEE8' },
+  locationBackdrop: { flex: 1, justifyContent: 'center', padding: 28, backgroundColor: 'rgba(16,36,31,0.58)' },
+  locationModal: { alignItems: 'center', padding: 16, borderRadius: 15, backgroundColor: C.card },
+  locationModalIcon: { width: 42, height: 42, alignItems: 'center', justifyContent: 'center', borderRadius: 12, backgroundColor: '#E8EEE8', marginBottom: 10 },
+  locationModalGlyph: { color: C.ink, fontSize: 21 },
   modeledList: { alignSelf: 'stretch', marginTop: 13, padding: 11, borderRadius: 11, backgroundColor: '#F5F4EF' },
   modeledRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 7 },
   modeledGlyph: { color: C.green, fontSize: 14 },

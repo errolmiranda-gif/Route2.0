@@ -33,6 +33,12 @@
           "imageWidth": 76
         }
       ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow Route2.0 to use your location while the app is open to suggest a nearby starting point. Your coordinates are not saved."
+        }
+      ],
       "expo-sqlite"
     ],
     "experiments": {

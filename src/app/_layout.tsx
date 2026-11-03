@@ -1,6 +1,7 @@
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { CustomLoadingOverlay } from '@/components/custom-loading';
+import { ConnectionErrorBoundary } from '@/components/connection-error-boundary';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 SplashScreen.preventAutoHideAsync();
@@ -9,7 +10,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   return <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <CustomLoadingOverlay />
-    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#F4F2EA' } }}>
+    <Stack unstable_screenErrorBoundary={ConnectionErrorBoundary} screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#F4F2EA' } }}>
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="login" />
       <Stack.Screen name="register" />
