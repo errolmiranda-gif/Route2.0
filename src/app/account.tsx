@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocalSearchParams } from 'expo-router';
+import type { Href } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getPreference, setPreference } from '@/lib/saved-items';
@@ -19,7 +20,7 @@ export default function AccountScreen() {
   };
 
   return <SafeAreaView style={s.safe} edges={['top']}><ScrollView contentContainerStyle={s.page} keyboardShouldPersistTaps="handled">
-    <Link href={returnTo === 'profile' ? '/profile' : '/'} asChild><Pressable accessibilityRole="link" style={s.back}><Text style={s.backText}>{returnTo === 'profile' ? '‹  Back to profile' : '‹  Back home'}</Text></Pressable></Link>
+    <Link href={returnTo === 'profile' ? '/profile' : '/' as Href} asChild><Pressable accessibilityRole="link" style={s.back}><Text style={s.backText}>{returnTo === 'profile' ? '‹  Back to profile' : '‹  Back home'}</Text></Pressable></Link>
     <Text style={s.brand}>GENERAL TRIAS COMMUTE</Text>
     <Text style={s.title}>Rider profile</Text>
     <Text style={s.sub}>Add a name to personalize this app. Your profile stays on this device and does not require an account.</Text>

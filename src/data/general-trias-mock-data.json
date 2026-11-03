@@ -1,0 +1,1234 @@
+{
+  "disclaimer": "Sample routes, fares and schedules are illustrative and unverified. Coordinates are approximate. Confirm with the LTFRB, the City of General Trias, or local operators before relying on them.",
+  "barangays": [
+    {
+      "id": "arnaldo",
+      "name": "Arnaldo (Pob.)",
+      "lat": 14.3881,
+      "lng": 120.883,
+      "poblacion": true
+    },
+    {
+      "id": "corregidor",
+      "name": "Corregidor (Pob.)",
+      "lat": 14.3858,
+      "lng": 120.8798,
+      "poblacion": true
+    },
+    {
+      "id": "dulong-bayan",
+      "name": "Dulong Bayan (Pob.)",
+      "lat": 14.3872,
+      "lng": 120.8785,
+      "poblacion": true
+    },
+    {
+      "id": "governor-ferrer",
+      "name": "Governor Ferrer (Pob.)",
+      "lat": 14.3869,
+      "lng": 120.8814,
+      "poblacion": true
+    },
+    {
+      "id": "ninety-sixth",
+      "name": "Ninety Sixth (Pob.)",
+      "lat": 14.389,
+      "lng": 120.8805,
+      "poblacion": true
+    },
+    {
+      "id": "prinza",
+      "name": "Prinza (Pob.)",
+      "lat": 14.3878,
+      "lng": 120.88,
+      "poblacion": true
+    },
+    {
+      "id": "sampalucan",
+      "name": "Sampalucan (Pob.)",
+      "lat": 14.3865,
+      "lng": 120.8825,
+      "poblacion": true
+    },
+    {
+      "id": "san-gabriel",
+      "name": "San Gabriel (Pob.)",
+      "lat": 14.385,
+      "lng": 120.8812,
+      "poblacion": true
+    },
+    {
+      "id": "vibora",
+      "name": "Vibora (Pob.)",
+      "lat": 14.3886,
+      "lng": 120.8792,
+      "poblacion": true
+    },
+    {
+      "id": "alingaro",
+      "name": "Alingaro",
+      "lat": 14.382,
+      "lng": 120.861,
+      "poblacion": false
+    },
+    {
+      "id": "bacao-1",
+      "name": "Bacao I",
+      "lat": 14.405,
+      "lng": 120.875,
+      "poblacion": false
+    },
+    {
+      "id": "bacao-2",
+      "name": "Bacao II",
+      "lat": 14.412,
+      "lng": 120.868,
+      "poblacion": false
+    },
+    {
+      "id": "bagumbayan",
+      "name": "Bagumbayan",
+      "lat": 14.37,
+      "lng": 120.87,
+      "poblacion": false
+    },
+    {
+      "id": "biclatan",
+      "name": "Biclatan",
+      "lat": 14.386,
+      "lng": 120.897,
+      "poblacion": false
+    },
+    {
+      "id": "buenavista-1",
+      "name": "Buenavista I",
+      "lat": 14.364,
+      "lng": 120.9,
+      "poblacion": false
+    },
+    {
+      "id": "buenavista-2",
+      "name": "Buenavista II",
+      "lat": 14.36,
+      "lng": 120.906,
+      "poblacion": false
+    },
+    {
+      "id": "buenavista-3",
+      "name": "Buenavista III",
+      "lat": 14.356,
+      "lng": 120.912,
+      "poblacion": false
+    },
+    {
+      "id": "javalera",
+      "name": "Javalera",
+      "lat": 14.368,
+      "lng": 120.883,
+      "poblacion": false
+    },
+    {
+      "id": "manggahan",
+      "name": "Manggahan",
+      "lat": 14.345,
+      "lng": 120.904,
+      "poblacion": false
+    },
+    {
+      "id": "navarro",
+      "name": "Navarro",
+      "lat": 14.364,
+      "lng": 120.876,
+      "poblacion": false
+    },
+    {
+      "id": "panungyanan",
+      "name": "Panungyanan",
+      "lat": 14.399,
+      "lng": 120.883,
+      "poblacion": false
+    },
+    {
+      "id": "pasong-camachile-1",
+      "name": "Pasong Camachile I",
+      "lat": 14.33,
+      "lng": 120.909,
+      "poblacion": false
+    },
+    {
+      "id": "pasong-camachile-2",
+      "name": "Pasong Camachile II",
+      "lat": 14.333,
+      "lng": 120.915,
+      "poblacion": false
+    },
+    {
+      "id": "pasong-kawayan-1",
+      "name": "Pasong Kawayan I",
+      "lat": 14.375,
+      "lng": 120.895,
+      "poblacion": false
+    },
+    {
+      "id": "pasong-kawayan-2",
+      "name": "Pasong Kawayan II",
+      "lat": 14.378,
+      "lng": 120.901,
+      "poblacion": false
+    },
+    {
+      "id": "pinagtipunan",
+      "name": "Pinagtipunan",
+      "lat": 14.393,
+      "lng": 120.886,
+      "poblacion": false
+    },
+    {
+      "id": "san-francisco",
+      "name": "San Francisco",
+      "lat": 14.383,
+      "lng": 120.875,
+      "poblacion": false
+    },
+    {
+      "id": "san-juan-1",
+      "name": "San Juan I",
+      "lat": 14.349,
+      "lng": 120.886,
+      "poblacion": false
+    },
+    {
+      "id": "san-juan-2",
+      "name": "San Juan II",
+      "lat": 14.345,
+      "lng": 120.892,
+      "poblacion": false
+    },
+    {
+      "id": "santa-clara",
+      "name": "Santa Clara",
+      "lat": 14.356,
+      "lng": 120.885,
+      "poblacion": false
+    },
+    {
+      "id": "santiago",
+      "name": "Santiago",
+      "lat": 14.371,
+      "lng": 120.907,
+      "poblacion": false
+    },
+    {
+      "id": "tapia",
+      "name": "Tapia",
+      "lat": 14.348,
+      "lng": 120.861,
+      "poblacion": false
+    },
+    {
+      "id": "tejero",
+      "name": "Tejero",
+      "lat": 14.403,
+      "lng": 120.862,
+      "poblacion": false
+    }
+  ],
+  "places": [
+    {
+      "id": "pl-cityhall",
+      "name": "General Trias City Hall",
+      "category": "government",
+      "barangayId": "governor-ferrer",
+      "lat": 14.3869,
+      "lng": 120.8814,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-poblacion",
+      "walkMinToStop": 2
+    },
+    {
+      "id": "pl-parish",
+      "name": "St. Francis of Assisi Parish",
+      "category": "church",
+      "barangayId": "governor-ferrer",
+      "lat": 14.3866,
+      "lng": 120.8809,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-poblacion",
+      "walkMinToStop": 3
+    },
+    {
+      "id": "pl-monument",
+      "name": "General Mariano Trias Monument",
+      "category": "landmark",
+      "barangayId": "governor-ferrer",
+      "lat": 14.3871,
+      "lng": 120.8816,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-poblacion",
+      "walkMinToStop": 2
+    },
+    {
+      "id": "pl-citypark",
+      "name": "General Trias City Park",
+      "category": "park",
+      "barangayId": "governor-ferrer",
+      "lat": 14.3862,
+      "lng": 120.882,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-poblacion",
+      "walkMinToStop": 4
+    },
+    {
+      "id": "pl-sportspark",
+      "name": "General Trias Sports Park",
+      "category": "park",
+      "barangayId": "pinagtipunan",
+      "lat": 14.3925,
+      "lng": 120.887,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-pinagtipunan",
+      "walkMinToStop": 5
+    },
+    {
+      "id": "pl-market",
+      "name": "General Trias Public Market",
+      "category": "market",
+      "barangayId": "prinza",
+      "lat": 14.3878,
+      "lng": 120.88,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-poblacion",
+      "walkMinToStop": 3
+    },
+    {
+      "id": "pl-tejeros",
+      "name": "Tejeros Convention historical site",
+      "category": "landmark",
+      "barangayId": "tejero",
+      "lat": 14.4035,
+      "lng": 120.8628,
+      "nearestTerminalId": "t-tejero",
+      "nearestStopId": "s-tejero",
+      "walkMinToStop": 6
+    },
+    {
+      "id": "pl-gateway",
+      "name": "Gateway Business Park",
+      "category": "industrial",
+      "barangayId": "javalera",
+      "lat": 14.368,
+      "lng": 120.883,
+      "nearestTerminalId": "t-gateway",
+      "nearestStopId": "s-gateway",
+      "walkMinToStop": 2
+    },
+    {
+      "id": "pl-ncic",
+      "name": "New Cavite Industrial City (NCIC)",
+      "category": "industrial",
+      "barangayId": "manggahan",
+      "lat": 14.344,
+      "lng": 120.9055,
+      "nearestTerminalId": "t-manggahan",
+      "nearestStopId": "s-manggahan",
+      "walkMinToStop": 7
+    },
+    {
+      "id": "pl-hs-poblacion",
+      "name": "Poblacion National High School (sample)",
+      "category": "school",
+      "barangayId": "san-gabriel",
+      "lat": 14.3852,
+      "lng": 120.8806,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-poblacion",
+      "walkMinToStop": 5
+    },
+    {
+      "id": "pl-college-gateway",
+      "name": "Sample College – Javalera",
+      "category": "school",
+      "barangayId": "javalera",
+      "lat": 14.369,
+      "lng": 120.8845,
+      "nearestTerminalId": "t-gateway",
+      "nearestStopId": "s-gateway",
+      "walkMinToStop": 6
+    },
+    {
+      "id": "pl-elem-biclatan",
+      "name": "Biclatan Elementary School (sample)",
+      "category": "school",
+      "barangayId": "biclatan",
+      "lat": 14.3858,
+      "lng": 120.8962,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-biclatan",
+      "walkMinToStop": 4
+    },
+    {
+      "id": "pl-hospital",
+      "name": "General Trias Medical Center (sample)",
+      "category": "hospital",
+      "barangayId": "arnaldo",
+      "lat": 14.3885,
+      "lng": 120.8838,
+      "nearestTerminalId": "t-poblacion",
+      "nearestStopId": "s-poblacion",
+      "walkMinToStop": 7
+    },
+    {
+      "id": "pl-health-santiago",
+      "name": "Santiago Health Center (sample)",
+      "category": "hospital",
+      "barangayId": "santiago",
+      "lat": 14.3715,
+      "lng": 120.906,
+      "nearestTerminalId": "t-pcamachile",
+      "nearestStopId": "s-santiago",
+      "walkMinToStop": 3
+    },
+    {
+      "id": "pl-mall-gov",
+      "name": "Sample Mall – Governor's Drive",
+      "category": "mall",
+      "barangayId": "pasong-camachile-1",
+      "lat": 14.333,
+      "lng": 120.9105,
+      "nearestTerminalId": "t-pcamachile",
+      "nearestStopId": "s-pcamachile",
+      "walkMinToStop": 5
+    },
+    {
+      "id": "pl-mall-gateway",
+      "name": "Sample Mall – Gateway Area",
+      "category": "mall",
+      "barangayId": "javalera",
+      "lat": 14.3672,
+      "lng": 120.884,
+      "nearestTerminalId": "t-gateway",
+      "nearestStopId": "s-gateway",
+      "walkMinToStop": 4
+    },
+    {
+      "id": "pl-chapel-tapia",
+      "name": "Tapia Chapel (sample)",
+      "category": "church",
+      "barangayId": "tapia",
+      "lat": 14.3485,
+      "lng": 120.8615,
+      "nearestTerminalId": "t-tapia",
+      "nearestStopId": "s-tapia",
+      "walkMinToStop": 2
+    },
+    {
+      "id": "pl-market-tejero",
+      "name": "Tejero Talipapa (sample)",
+      "category": "market",
+      "barangayId": "tejero",
+      "lat": 14.4025,
+      "lng": 120.8625,
+      "nearestTerminalId": "t-tejero",
+      "nearestStopId": "s-tejero",
+      "walkMinToStop": 2
+    },
+    {
+      "id": "pl-vill-manggahan",
+      "name": "Manggahan Subdivision Gate (sample)",
+      "category": "residential",
+      "barangayId": "manggahan",
+      "lat": 14.346,
+      "lng": 120.903,
+      "nearestTerminalId": "t-manggahan",
+      "nearestStopId": "s-manggahan",
+      "walkMinToStop": 4
+    },
+    {
+      "id": "pl-vill-camachile",
+      "name": "Pasong Camachile Village Gate (sample)",
+      "category": "residential",
+      "barangayId": "pasong-camachile-2",
+      "lat": 14.3335,
+      "lng": 120.9155,
+      "nearestTerminalId": "t-pcamachile",
+      "nearestStopId": "s-pcamachile",
+      "walkMinToStop": 6
+    },
+    {
+      "id": "pl-vill-bacao",
+      "name": "Bacao Village Gate (sample)",
+      "category": "residential",
+      "barangayId": "bacao-2",
+      "lat": 14.4115,
+      "lng": 120.8685,
+      "nearestTerminalId": "t-bacao",
+      "nearestStopId": "s-bacao",
+      "walkMinToStop": 9
+    },
+    {
+      "id": "pl-vill-buenavista",
+      "name": "Buenavista Subdivision Gate (sample)",
+      "category": "residential",
+      "barangayId": "buenavista-3",
+      "lat": 14.3565,
+      "lng": 120.9115,
+      "nearestTerminalId": "t-pcamachile",
+      "nearestStopId": "s-buenavista",
+      "walkMinToStop": 8
+    }
+  ],
+  "terminals": [
+    {
+      "id": "t-poblacion",
+      "name": "General Trias Poblacion Terminal",
+      "barangayId": "prinza",
+      "lat": 14.3874,
+      "lng": 120.8806,
+      "modes": [
+        "jeepney",
+        "uv_express",
+        "tricycle"
+      ],
+      "bays": [
+        {
+          "label": "Bay 1",
+          "toward": "Tejero / Rosario",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bay 2",
+          "toward": "Manggahan / Gateway",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bay 3",
+          "toward": "Pasong Camachile / Dasmariñas",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bay 4",
+          "toward": "Tapia / Trece Martires",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bay 5",
+          "toward": "Bacao / Tanza",
+          "mode": "jeepney"
+        },
+        {
+          "label": "UV bay",
+          "toward": "Alabang",
+          "mode": "uv_express"
+        }
+      ],
+      "facilities": [
+        "covered waiting area",
+        "public market nearby",
+        "restrooms",
+        "food stalls"
+      ],
+      "hours": "04:30–21:00",
+      "notes": "Main hub near the city center and public market."
+    },
+    {
+      "id": "t-tejero",
+      "name": "Tejero Crossing Loading Area",
+      "barangayId": "tejero",
+      "lat": 14.403,
+      "lng": 120.862,
+      "modes": [
+        "jeepney",
+        "bus",
+        "uv_express",
+        "tricycle"
+      ],
+      "bays": [
+        {
+          "label": "North side",
+          "toward": "Rosario / PITX",
+          "mode": "bus"
+        },
+        {
+          "label": "South side",
+          "toward": "General Trias Poblacion",
+          "mode": "bus"
+        },
+        {
+          "label": "Curb",
+          "toward": "Poblacion",
+          "mode": "jeepney"
+        }
+      ],
+      "facilities": [
+        "roadside waiting shed",
+        "sari-sari stores"
+      ],
+      "hours": "04:00–22:00",
+      "notes": "Where General Trias Drive meets Centennial Road. Common transfer point to Rosario-bound rides."
+    },
+    {
+      "id": "t-gateway",
+      "name": "Gateway Business Park Loading Bay",
+      "barangayId": "javalera",
+      "lat": 14.368,
+      "lng": 120.883,
+      "modes": [
+        "jeepney",
+        "bus",
+        "uv_express",
+        "tricycle"
+      ],
+      "bays": [
+        {
+          "label": "Bay A",
+          "toward": "Poblacion / Manggahan",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bus bay",
+          "toward": "PITX",
+          "mode": "bus"
+        },
+        {
+          "label": "UV bay",
+          "toward": "Alabang",
+          "mode": "uv_express"
+        }
+      ],
+      "facilities": [
+        "security guard",
+        "waiting shed",
+        "convenience stores"
+      ],
+      "hours": "04:30–22:00",
+      "notes": "Serves workers of the Gateway Business Park; busiest at shift changes."
+    },
+    {
+      "id": "t-manggahan",
+      "name": "Manggahan Terminal",
+      "barangayId": "manggahan",
+      "lat": 14.345,
+      "lng": 120.904,
+      "modes": [
+        "jeepney",
+        "bus",
+        "tricycle"
+      ],
+      "bays": [
+        {
+          "label": "Bus bay",
+          "toward": "PITX",
+          "mode": "bus"
+        },
+        {
+          "label": "Bay 1",
+          "toward": "General Trias Poblacion",
+          "mode": "jeepney"
+        }
+      ],
+      "facilities": [
+        "waiting shed",
+        "food stalls"
+      ],
+      "hours": "04:00–21:30",
+      "notes": "Near the New Cavite Industrial City."
+    },
+    {
+      "id": "t-pcamachile",
+      "name": "Pasong Camachile Crossing",
+      "barangayId": "pasong-camachile-1",
+      "lat": 14.332,
+      "lng": 120.912,
+      "modes": [
+        "jeepney",
+        "tricycle"
+      ],
+      "bays": [
+        {
+          "label": "Bay 1",
+          "toward": "Dasmariñas",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bay 2",
+          "toward": "General Trias Poblacion",
+          "mode": "jeepney"
+        }
+      ],
+      "facilities": [
+        "roadside waiting shed"
+      ],
+      "hours": "04:30–21:00",
+      "notes": "Along Governor's Drive, near the Dasmariñas boundary."
+    },
+    {
+      "id": "t-tapia",
+      "name": "Tapia Crossing",
+      "barangayId": "tapia",
+      "lat": 14.348,
+      "lng": 120.861,
+      "modes": [
+        "jeepney",
+        "tricycle"
+      ],
+      "bays": [
+        {
+          "label": "Bay 1",
+          "toward": "Trece Martires / Amadeo",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bay 2",
+          "toward": "General Trias Poblacion",
+          "mode": "jeepney"
+        }
+      ],
+      "facilities": [
+        "roadside waiting shed"
+      ],
+      "hours": "05:00–20:30",
+      "notes": "On the Amadeo–General Trias road."
+    },
+    {
+      "id": "t-bacao",
+      "name": "Bacao Crossing",
+      "barangayId": "bacao-1",
+      "lat": 14.405,
+      "lng": 120.875,
+      "modes": [
+        "jeepney",
+        "tricycle"
+      ],
+      "bays": [
+        {
+          "label": "Bay 1",
+          "toward": "Tanza",
+          "mode": "jeepney"
+        },
+        {
+          "label": "Bay 2",
+          "toward": "General Trias Poblacion",
+          "mode": "jeepney"
+        }
+      ],
+      "facilities": [
+        "roadside waiting shed"
+      ],
+      "hours": "05:00–20:30"
+    }
+  ],
+  "stops": [
+    {
+      "id": "s-poblacion",
+      "name": "General Trias City Hall / Plaza",
+      "lat": 14.3869,
+      "lng": 120.8814,
+      "barangayId": "governor-ferrer",
+      "terminalId": "t-poblacion"
+    },
+    {
+      "id": "s-pinagtipunan",
+      "name": "Pinagtipunan Junction",
+      "lat": 14.393,
+      "lng": 120.886,
+      "barangayId": "pinagtipunan"
+    },
+    {
+      "id": "s-panungyanan",
+      "name": "Panungyanan Junction",
+      "lat": 14.399,
+      "lng": 120.883,
+      "barangayId": "panungyanan"
+    },
+    {
+      "id": "s-tejero",
+      "name": "Tejero Crossing",
+      "lat": 14.403,
+      "lng": 120.862,
+      "barangayId": "tejero",
+      "terminalId": "t-tejero"
+    },
+    {
+      "id": "s-bacao",
+      "name": "Bacao Crossing",
+      "lat": 14.405,
+      "lng": 120.875,
+      "barangayId": "bacao-1",
+      "terminalId": "t-bacao"
+    },
+    {
+      "id": "s-alingaro",
+      "name": "Alingaro Junction",
+      "lat": 14.382,
+      "lng": 120.861,
+      "barangayId": "alingaro"
+    },
+    {
+      "id": "s-sanfrancisco",
+      "name": "San Francisco Crossing",
+      "lat": 14.383,
+      "lng": 120.875,
+      "barangayId": "san-francisco"
+    },
+    {
+      "id": "s-gateway",
+      "name": "Gateway Business Park",
+      "lat": 14.368,
+      "lng": 120.883,
+      "barangayId": "javalera",
+      "terminalId": "t-gateway"
+    },
+    {
+      "id": "s-santaclara",
+      "name": "Santa Clara Crossing",
+      "lat": 14.356,
+      "lng": 120.885,
+      "barangayId": "santa-clara"
+    },
+    {
+      "id": "s-sanjuan",
+      "name": "San Juan Junction",
+      "lat": 14.347,
+      "lng": 120.889,
+      "barangayId": "san-juan-1"
+    },
+    {
+      "id": "s-manggahan",
+      "name": "Manggahan Terminal",
+      "lat": 14.345,
+      "lng": 120.904,
+      "barangayId": "manggahan",
+      "terminalId": "t-manggahan"
+    },
+    {
+      "id": "s-tapia",
+      "name": "Tapia Crossing",
+      "lat": 14.348,
+      "lng": 120.861,
+      "barangayId": "tapia",
+      "terminalId": "t-tapia"
+    },
+    {
+      "id": "s-biclatan",
+      "name": "Biclatan Junction",
+      "lat": 14.386,
+      "lng": 120.897,
+      "barangayId": "biclatan"
+    },
+    {
+      "id": "s-pkawayan",
+      "name": "Pasong Kawayan Crossing",
+      "lat": 14.377,
+      "lng": 120.899,
+      "barangayId": "pasong-kawayan-1"
+    },
+    {
+      "id": "s-santiago",
+      "name": "Santiago Crossing",
+      "lat": 14.371,
+      "lng": 120.907,
+      "barangayId": "santiago"
+    },
+    {
+      "id": "s-buenavista",
+      "name": "Buenavista Crossing",
+      "lat": 14.36,
+      "lng": 120.906,
+      "barangayId": "buenavista-2"
+    },
+    {
+      "id": "s-pcamachile",
+      "name": "Pasong Camachile Crossing",
+      "lat": 14.332,
+      "lng": 120.912,
+      "barangayId": "pasong-camachile-1",
+      "terminalId": "t-pcamachile"
+    },
+    {
+      "id": "x-rosario",
+      "name": "Rosario (SM Rosario area)",
+      "lat": 14.412,
+      "lng": 120.858,
+      "external": true
+    },
+    {
+      "id": "x-tanza",
+      "name": "Tanza Poblacion",
+      "lat": 14.34,
+      "lng": 120.848,
+      "external": true
+    },
+    {
+      "id": "x-dasmarinas",
+      "name": "Dasmariñas Pala-pala Terminal",
+      "lat": 14.313,
+      "lng": 120.942,
+      "external": true
+    },
+    {
+      "id": "x-trece",
+      "name": "Trece Martires",
+      "lat": 14.282,
+      "lng": 120.867,
+      "external": true
+    },
+    {
+      "id": "x-amadeo",
+      "name": "Amadeo",
+      "lat": 14.17,
+      "lng": 120.92,
+      "external": true
+    },
+    {
+      "id": "x-pitx",
+      "name": "PITX (Parañaque)",
+      "lat": 14.5105,
+      "lng": 120.9908,
+      "external": true
+    },
+    {
+      "id": "x-alabang",
+      "name": "Alabang",
+      "lat": 14.4195,
+      "lng": 121.039,
+      "external": true
+    }
+  ],
+  "routes": [
+    {
+      "id": "r-j01",
+      "code": "GT-01",
+      "name": "Poblacion – Tejero – Rosario",
+      "mode": "jeepney",
+      "operator": "Sample GenTri–Rosario PUJ Assn.",
+      "stopIds": [
+        "s-poblacion",
+        "s-pinagtipunan",
+        "s-panungyanan",
+        "s-tejero",
+        "x-rosario"
+      ],
+      "fare": {
+        "base": 13,
+        "baseKm": 4,
+        "perKm": 1.8
+      },
+      "headwayMin": 8,
+      "firstTrip": "04:30",
+      "lastTrip": "21:00",
+      "avgSpeedKph": 16,
+      "bidirectional": true,
+      "roadNotes": "General Trias Drive; heavy traffic near Tejero at rush hours."
+    },
+    {
+      "id": "r-j02",
+      "code": "GT-02",
+      "name": "Poblacion – Gateway – Manggahan",
+      "mode": "jeepney",
+      "operator": "Sample GenTri–Manggahan PUJ Assn.",
+      "stopIds": [
+        "s-poblacion",
+        "s-sanfrancisco",
+        "s-gateway",
+        "s-santaclara",
+        "s-sanjuan",
+        "s-manggahan"
+      ],
+      "fare": {
+        "base": 13,
+        "baseKm": 4,
+        "perKm": 1.8
+      },
+      "headwayMin": 7,
+      "firstTrip": "04:30",
+      "lastTrip": "21:30",
+      "avgSpeedKph": 16,
+      "bidirectional": true,
+      "roadNotes": "Passes the Gateway Business Park; busy at shift changes."
+    },
+    {
+      "id": "r-j03",
+      "code": "GT-03",
+      "name": "Poblacion – Pasong Camachile – Dasmariñas",
+      "mode": "jeepney",
+      "operator": "Sample GenTri–Dasma PUJ Assn.",
+      "stopIds": [
+        "s-poblacion",
+        "s-biclatan",
+        "s-pkawayan",
+        "s-santiago",
+        "s-pcamachile",
+        "x-dasmarinas"
+      ],
+      "fare": {
+        "base": 13,
+        "baseKm": 4,
+        "perKm": 1.8
+      },
+      "headwayMin": 10,
+      "firstTrip": "04:30",
+      "lastTrip": "21:00",
+      "avgSpeedKph": 18,
+      "bidirectional": true,
+      "roadNotes": "Governor's Drive section is wider and moves faster."
+    },
+    {
+      "id": "r-j04",
+      "code": "GT-04",
+      "name": "Poblacion – Tapia – Trece Martires",
+      "mode": "jeepney",
+      "operator": "Sample GenTri–Trece PUJ Assn.",
+      "stopIds": [
+        "s-poblacion",
+        "s-sanfrancisco",
+        "s-santaclara",
+        "s-sanjuan",
+        "s-tapia",
+        "x-trece"
+      ],
+      "fare": {
+        "base": 13,
+        "baseKm": 4,
+        "perKm": 1.8
+      },
+      "headwayMin": 15,
+      "firstTrip": "05:00",
+      "lastTrip": "20:00",
+      "avgSpeedKph": 17,
+      "bidirectional": true,
+      "roadNotes": "Longer wait between trips; fewer vehicles after 6 PM."
+    },
+    {
+      "id": "r-j05",
+      "code": "GT-05",
+      "name": "Poblacion – Alingaro – Tapia – Amadeo",
+      "mode": "jeepney",
+      "operator": "Sample GenTri–Amadeo PUJ Assn.",
+      "stopIds": [
+        "s-poblacion",
+        "s-alingaro",
+        "s-tapia",
+        "x-amadeo"
+      ],
+      "fare": {
+        "base": 13,
+        "baseKm": 4,
+        "perKm": 1.8
+      },
+      "headwayMin": 20,
+      "firstTrip": "05:00",
+      "lastTrip": "19:00",
+      "avgSpeedKph": 17,
+      "bidirectional": true,
+      "roadNotes": "Rural stretch; limited trips late in the day."
+    },
+    {
+      "id": "r-j06",
+      "code": "GT-06",
+      "name": "Poblacion – Bacao – Tanza",
+      "mode": "jeepney",
+      "operator": "Sample GenTri–Tanza PUJ Assn.",
+      "stopIds": [
+        "s-poblacion",
+        "s-panungyanan",
+        "s-bacao",
+        "x-tanza"
+      ],
+      "fare": {
+        "base": 13,
+        "baseKm": 4,
+        "perKm": 1.8
+      },
+      "headwayMin": 12,
+      "firstTrip": "05:00",
+      "lastTrip": "20:30",
+      "avgSpeedKph": 17,
+      "bidirectional": true,
+      "roadNotes": "Passes the Bacao area toward Tanza."
+    },
+    {
+      "id": "r-j07",
+      "code": "GT-07",
+      "name": "Poblacion – Biclatan – Buenavista Loop",
+      "mode": "jeepney",
+      "operator": "Sample GenTri Inner-Loop PUJ Assn.",
+      "stopIds": [
+        "s-poblacion",
+        "s-biclatan",
+        "s-pkawayan",
+        "s-santiago",
+        "s-buenavista"
+      ],
+      "fare": {
+        "base": 13,
+        "baseKm": 4,
+        "perKm": 1.8
+      },
+      "headwayMin": 10,
+      "firstTrip": "05:00",
+      "lastTrip": "20:30",
+      "avgSpeedKph": 15,
+      "bidirectional": true,
+      "roadNotes": "Inner-barangay route; many village stops."
+    },
+    {
+      "id": "r-b01",
+      "code": "GT-B1",
+      "name": "PITX – Tejero – Poblacion – Gateway – Manggahan",
+      "mode": "bus",
+      "operator": "Sample PITX–GenTri Bus Co.",
+      "stopIds": [
+        "x-pitx",
+        "s-tejero",
+        "s-poblacion",
+        "s-gateway",
+        "s-manggahan"
+      ],
+      "fare": {
+        "base": 15,
+        "baseKm": 5,
+        "perKm": 2.4
+      },
+      "headwayMin": 20,
+      "firstTrip": "04:00",
+      "lastTrip": "21:00",
+      "avgSpeedKph": 22,
+      "bidirectional": true,
+      "roadNotes": "Long route; travel time depends heavily on Cavitex and Aguinaldo Highway traffic."
+    },
+    {
+      "id": "r-u01",
+      "code": "GT-U1",
+      "name": "Poblacion – Gateway – Alabang (UV Express)",
+      "mode": "uv_express",
+      "operator": "Sample GenTri UV Express Coop.",
+      "stopIds": [
+        "s-poblacion",
+        "s-gateway",
+        "s-tejero",
+        "x-alabang"
+      ],
+      "fare": {
+        "base": 35,
+        "baseKm": 5,
+        "perKm": 3.5
+      },
+      "headwayMin": 15,
+      "firstTrip": "04:30",
+      "lastTrip": "20:00",
+      "avgSpeedKph": 28,
+      "bidirectional": true,
+      "roadNotes": "Leaves when full; limited drop-offs along the way."
+    }
+  ],
+  "tricycleZones": [
+    {
+      "id": "z-poblacion",
+      "todaName": "Poblacion TODA (sample)",
+      "terminalId": "t-poblacion",
+      "barangayIds": [
+        "arnaldo",
+        "corregidor",
+        "dulong-bayan",
+        "governor-ferrer",
+        "ninety-sixth",
+        "prinza",
+        "sampalucan",
+        "san-gabriel",
+        "vibora",
+        "pinagtipunan",
+        "san-francisco"
+      ],
+      "fareRange": [
+        15,
+        40
+      ],
+      "specialTrip": 120,
+      "hours": "05:00–22:00"
+    },
+    {
+      "id": "z-tejero",
+      "todaName": "Tejero TODA (sample)",
+      "terminalId": "t-tejero",
+      "barangayIds": [
+        "tejero",
+        "alingaro",
+        "panungyanan"
+      ],
+      "fareRange": [
+        15,
+        35
+      ],
+      "specialTrip": 110,
+      "hours": "05:00–21:30"
+    },
+    {
+      "id": "z-javalera",
+      "todaName": "Javalera–Gateway TODA (sample)",
+      "terminalId": "t-gateway",
+      "barangayIds": [
+        "javalera",
+        "navarro",
+        "bagumbayan"
+      ],
+      "fareRange": [
+        15,
+        40
+      ],
+      "specialTrip": 120,
+      "hours": "05:00–22:00"
+    },
+    {
+      "id": "z-manggahan",
+      "todaName": "Manggahan TODA (sample)",
+      "terminalId": "t-manggahan",
+      "barangayIds": [
+        "manggahan",
+        "san-juan-1",
+        "san-juan-2",
+        "santa-clara"
+      ],
+      "fareRange": [
+        15,
+        40
+      ],
+      "specialTrip": 120,
+      "hours": "05:00–21:30"
+    },
+    {
+      "id": "z-pcamachile",
+      "todaName": "Pasong Camachile TODA (sample)",
+      "terminalId": "t-pcamachile",
+      "barangayIds": [
+        "pasong-camachile-1",
+        "pasong-camachile-2",
+        "buenavista-1",
+        "buenavista-2",
+        "buenavista-3",
+        "santiago"
+      ],
+      "fareRange": [
+        15,
+        40
+      ],
+      "specialTrip": 120,
+      "hours": "05:00–21:30"
+    }
+  ],
+  "transfers": [
+    {
+      "fromStopId": "s-gateway",
+      "toStopId": "s-santaclara",
+      "walkMeters": 450,
+      "walkMin": 6,
+      "steps": "Walk south along the main road to the Santa Clara crossing."
+    },
+    {
+      "fromStopId": "s-pinagtipunan",
+      "toStopId": "s-poblacion",
+      "walkMeters": 700,
+      "walkMin": 9,
+      "steps": "Walk toward the city plaza and the Poblacion terminal."
+    }
+  ]
+}
